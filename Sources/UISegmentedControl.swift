@@ -63,7 +63,7 @@ extension UISegmentedControl {
 
 extension UISegmentedControl: BindableType {
   
-  public func observer(disconnectDisposable: Disposable) -> (StreamEvent<Int> -> ()) {
+  public func observer(_ disconnectDisposable: Disposable) -> ((StreamEvent<Int>) -> ()) {
     return self.rSelectedSegmentIndex.observer(disconnectDisposable)
   }
 }

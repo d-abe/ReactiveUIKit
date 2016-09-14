@@ -33,20 +33,20 @@ import ReactiveKit
   init(control: UIControl) {
     self.control = control
     super.init()
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchDown), forControlEvents: UIControlEvents.TouchDown)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchDownRepeat), forControlEvents: UIControlEvents.TouchDownRepeat)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchDragInside), forControlEvents: UIControlEvents.TouchDragInside)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchDragOutside), forControlEvents: UIControlEvents.TouchDragOutside)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchDragEnter), forControlEvents: UIControlEvents.TouchDragEnter)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchDragExit), forControlEvents: UIControlEvents.TouchDragExit)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchUpInside), forControlEvents: UIControlEvents.TouchUpInside)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchUpOutside), forControlEvents: UIControlEvents.TouchUpOutside)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchCancel), forControlEvents: UIControlEvents.TouchCancel)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerValueChanged), forControlEvents: UIControlEvents.ValueChanged)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerEditingDidBegin), forControlEvents: UIControlEvents.EditingDidBegin)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerEditingChanged), forControlEvents: UIControlEvents.EditingChanged)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerEditingDidEnd), forControlEvents: UIControlEvents.EditingDidEnd)
-    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerEditingDidEndOnExit), forControlEvents: UIControlEvents.EditingDidEndOnExit)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchDown), for: UIControlEvents.touchDown)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchDownRepeat), for: UIControlEvents.touchDownRepeat)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchDragInside), for: UIControlEvents.touchDragInside)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchDragOutside), for: UIControlEvents.touchDragOutside)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchDragEnter), for: UIControlEvents.touchDragEnter)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchDragExit), for: UIControlEvents.touchDragExit)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchUpInside), for: UIControlEvents.touchUpInside)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchUpOutside), for: UIControlEvents.touchUpOutside)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerTouchCancel), for: UIControlEvents.touchCancel)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerValueChanged), for: UIControlEvents.valueChanged)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerEditingDidBegin), for: UIControlEvents.editingDidBegin)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerEditingChanged), for: UIControlEvents.editingChanged)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerEditingDidEnd), for: UIControlEvents.editingDidEnd)
+    control.addTarget(self, action: #selector(RKUIControlHelper.eventHandlerEditingDidEndOnExit), for: UIControlEvents.editingDidEndOnExit)
   }
   
   func eventHandlerTouchDown() {
@@ -106,7 +106,7 @@ import ReactiveKit
   }
   
   deinit {
-    control?.removeTarget(self, action: nil, forControlEvents: UIControlEvents.AllEvents)
+    control?.removeTarget(self, action: nil, for: UIControlEvents.allEvents)
     pushStream.completed()
   }
 }
@@ -117,12 +117,12 @@ extension UIControl {
     static var ControlHelperKey = "r_ControlHelperKey"
   }
   
-  public var rControlEvent: Stream<UIControlEvents> {
+  public var rControlEvent: Stream {
     if let controlHelper: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.ControlHelperKey) {
       return (controlHelper as! RKUIControlHelper).pushStream.toStream()
     } else {
       let controlHelper = RKUIControlHelper(control: self)
-      objc_setAssociatedObject(self, &AssociatedKeys.ControlHelperKey, controlHelper, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+      objc_setAssociatedObject(self, &AssociatedKeys.ControlHelperKey, controlHelper, objc_AssociationPolicy.objc_ASSOCIATION_RETAIN_NONATOMIC)
       return controlHelper.pushStream.toStream()
     }
   }

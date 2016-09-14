@@ -41,7 +41,7 @@ extension UILabel {
 }
 
 extension UILabel: BindableType {
-  public func observer(disconnectDisposable: Disposable) -> (StreamEvent<String?> -> ()) {
+  public func observer(_ disconnectDisposable: Disposable) -> ((StreamEvent<String?>) -> ()) {
     return self.rText.observer(disconnectDisposable)
   }
 }

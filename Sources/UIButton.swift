@@ -33,7 +33,7 @@ extension UIButton {
     }
   }
   
-  public var rTap: Stream<Void> {
+  public var rTap: Stream {
     return self.rControlEvent.filter { $0 == UIControlEvents.TouchUpInside }.map { e in }
   }
   

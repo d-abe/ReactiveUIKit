@@ -37,12 +37,12 @@ extension UIDatePicker {
     if let rDate: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.DateKey) {
       return rDate as! Property<NSDate>
     } else {
-      let rDate = Property<NSDate>(self.date)
+      let rDate = Property<Date>(self.date)
       objc_setAssociatedObject(self, &AssociatedKeys.DateKey, rDate, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
       
       var updatingFromSelf: Bool = false
       
-      rDate.observeNext { [weak self] (date: NSDate) in
+      rDate.observeNext { [weak self] (date: Date) in
         if !updatingFromSelf {
           self?.date = date
         }
@@ -64,7 +64,7 @@ extension UIDatePicker {
   
 extension UIDatePicker: BindableType {
   
-  public func observer(disconnectDisposable: Disposable) -> (StreamEvent<NSDate> -> ()) {
+  public func observer(_ disconnectDisposable: Disposable) -> ((StreamEvent<NSDate>) -> ()) {
     return self.rDate.observer(disconnectDisposable)
   }
 }

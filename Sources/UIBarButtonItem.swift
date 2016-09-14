@@ -37,12 +37,12 @@ extension UIBarButtonItem {
     static var BarButtonItemHelperKey = "r_BarButtonItemHelperKey"
   }
 
-  public var rTap: Stream<Void> {
+  public var rTap: Stream {
     if let helper: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.BarButtonItemHelperKey) {
       return (helper as! RKUIBarButtonItemHelper).pushStream.toStream()
     } else {
       let helper = RKUIBarButtonItemHelper(barButtonItem: self)
-      objc_setAssociatedObject(self, &AssociatedKeys.BarButtonItemHelperKey, helper, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+      objc_setAssociatedObject(self, &AssociatedKeys.BarButtonItemHelperKey, helper, objc_AssociationPolicy.objc_ASSOCIATION_RETAIN_NONATOMIC)
       return helper.pushStream.toStream()
     }
   }

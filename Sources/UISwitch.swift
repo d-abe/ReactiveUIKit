@@ -65,7 +65,7 @@ extension UISwitch {
   
 extension UISwitch: BindableType {
   
-  public func observer(disconnectDisposable: Disposable) -> (StreamEvent<Bool> -> ()) {
+  public func observer(_ disconnectDisposable: Disposable) -> ((StreamEvent<Bool>) -> ()) {
     return self.rOn.observer(disconnectDisposable)
   }
 }

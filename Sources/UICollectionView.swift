@@ -25,33 +25,33 @@
 import ReactiveKit
 import UIKit
 
-private func applyRowUnitChangeSet<C: CollectionChangesetType where C.Collection.Index == Int>(changeSet: C, collectionView: UICollectionView, sectionIndex: Int) {
+private func applyRowUnitChangeSet<C: CollectionChangesetType where C.Collection.Index == Int>(_ changeSet: C, collectionView: UICollectionView, sectionIndex: Int) {
   if changeSet.inserts.count > 0 {
-    let indexPaths = changeSet.inserts.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
+    let indexPaths = changeSet.inserts.map { IndexPath(forItem: $0, inSection: sectionIndex) }
     collectionView.insertItemsAtIndexPaths(indexPaths)
   }
 
   if changeSet.updates.count > 0 {
-    let indexPaths = changeSet.updates.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
+    let indexPaths = changeSet.updates.map { IndexPath(forItem: $0, inSection: sectionIndex) }
     collectionView.reloadItemsAtIndexPaths(indexPaths)
   }
 
   if changeSet.deletes.count > 0 {
-    let indexPaths = changeSet.deletes.map { NSIndexPath(forItem: $0, inSection: sectionIndex) }
+    let indexPaths = changeSet.deletes.map { IndexPath(forItem: $0, inSection: sectionIndex) }
     collectionView.deleteItemsAtIndexPaths(indexPaths)
   }
 }
 
 extension StreamType where Element: ArrayConvertible {
 
-  public func bindTo(collectionView: UICollectionView, animated: Bool = true, createCell: (NSIndexPath, [Element.Element], UICollectionView) -> UICollectionViewCell) -> Disposable {
+  public func bindTo(_ collectionView: UICollectionView, animated: Bool = true, createCell: (NSIndexPath, [Element.Element], UICollectionView) -> UICollectionViewCell) -> Disposable {
     return map { CollectionChangeset.initial($0.toArray()) }.bindTo(collectionView, animated: animated, createCell: createCell)
   }
 }
 
 extension StreamType where Element: CollectionChangesetType, Element.Collection.Index == Int, Event.Element == Element {
 
-  public func bindTo(collectionView: UICollectionView, animated: Bool = true, createCell: (NSIndexPath, Element.Collection, UICollectionView) -> UICollectionViewCell) -> Disposable {
+  public func bindTo(_ collectionView: UICollectionView, animated: Bool = true, createCell: (NSIndexPath, Element.Collection, UICollectionView) -> UICollectionViewCell) -> Disposable {
 
     typealias Collection = Element.Collection
 

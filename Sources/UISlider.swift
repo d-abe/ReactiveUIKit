@@ -64,7 +64,7 @@ extension UISlider {
   
 extension UISlider: BindableType {
     
-  public func observer(disconnectDisposable: Disposable) -> (StreamEvent<Float> -> ()) {
+  public func observer(_ disconnectDisposable: Disposable) -> ((StreamEvent<Float>) -> ()) {
     return self.rValue.observer(disconnectDisposable)
   }
 }

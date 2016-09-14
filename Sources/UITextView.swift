@@ -47,8 +47,8 @@ extension UITextView {
         }
       }.disposeIn(rBag)
       
-      NSNotificationCenter.defaultCenter()
-        .rNotification(UITextViewTextDidChangeNotification, object: self)
+      NotificationCenter.defaultCenter()
+        .rNotification(NSNotification.Name.UITextViewTextDidChange, object: self)
         .observeNext { [weak rText] notification in
           if let textView = notification.object as? UITextView, rText = rText {
             updatingFromSelf = true
@@ -65,19 +65,19 @@ extension UITextView {
     if let rAttributedText: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.AttributedTextKey) {
       return rAttributedText as! Property<NSAttributedString?>
     } else {
-      let rAttributedText = Property<NSAttributedString?>(self.attributedText)
+      let rAttributedText = Property<AttributedString?>(self.attributedText)
       objc_setAssociatedObject(self, &AssociatedKeys.AttributedTextKey, rAttributedText, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
       
       var updatingFromSelf: Bool = false
       
-      rAttributedText.observeNext { [weak self] (text: NSAttributedString?) in
+      rAttributedText.observeNext { [weak self] (text: AttributedString?) in
         if !updatingFromSelf {
           self?.attributedText = text
         }
       }.disposeIn(rBag)
       
-      NSNotificationCenter.defaultCenter()
-        .rNotification(UITextViewTextDidChangeNotification, object: self)
+      NotificationCenter.defaultCenter()
+        .rNotification(NSNotification.Name.UITextViewTextDidChange, object: self)
         .observeNext { [weak rAttributedText] notification in
         if let textView = notification.object as? UITextView, rAttributedText = rAttributedText {
           updatingFromSelf = true
@@ -97,7 +97,7 @@ extension UITextView {
 
 extension UITextView: BindableType {
   
-  public func observer(disconnectDisposable: Disposable) -> (StreamEvent<String?> -> ()) {
+  public func observer(_ disconnectDisposable: Disposable) -> ((StreamEvent<String?>) -> ()) {
     return self.rText.observer(disconnectDisposable)
   }
 }

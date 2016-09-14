@@ -34,7 +34,7 @@ extension UIImageView {
 
 extension UIImageView: BindableType {
   
-  public func observer(disconnectDisposable: Disposable) -> (StreamEvent<UIImage?> -> ()) {
+  public func observer(_ disconnectDisposable: Disposable) -> ((StreamEvent<UIImage?>) -> ()) {
     return self.rImage.observer(disconnectDisposable)
   }
 }
