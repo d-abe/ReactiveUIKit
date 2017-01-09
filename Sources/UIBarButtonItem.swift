@@ -33,12 +33,12 @@ import ReactiveKit
 
 extension UIBarButtonItem {
 
-  private struct AssociatedKeys {
+  fileprivate struct AssociatedKeys {
     static var BarButtonItemHelperKey = "r_BarButtonItemHelperKey"
   }
 
   public var rTap: Stream {
-    if let helper: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.BarButtonItemHelperKey) {
+    if let helper: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.BarButtonItemHelperKey) as AnyObject? {
       return (helper as! RKUIBarButtonItemHelper).pushStream.toStream()
     } else {
       let helper = RKUIBarButtonItemHelper(barButtonItem: self)

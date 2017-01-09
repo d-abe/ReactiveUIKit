@@ -113,12 +113,12 @@ import ReactiveKit
 
 extension UIControl {
   
-  private struct AssociatedKeys {
+  fileprivate struct AssociatedKeys {
     static var ControlHelperKey = "r_ControlHelperKey"
   }
   
   public var rControlEvent: Stream {
-    if let controlHelper: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.ControlHelperKey) {
+    if let controlHelper: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.ControlHelperKey) as AnyObject? {
       return (controlHelper as! RKUIControlHelper).pushStream.toStream()
     } else {
       let controlHelper = RKUIControlHelper(control: self)

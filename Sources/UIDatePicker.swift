@@ -29,12 +29,12 @@ import UIKit
   
 extension UIDatePicker {
   
-  private struct AssociatedKeys {
+  fileprivate struct AssociatedKeys {
     static var DateKey = "r_DateKey"
   }
   
   public var rDate: Property<NSDate> {
-    if let rDate: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.DateKey) {
+    if let rDate: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.DateKey) as AnyObject? {
       return rDate as! Property<NSDate>
     } else {
       let rDate = Property<Date>(self.date)

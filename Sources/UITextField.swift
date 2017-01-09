@@ -27,13 +27,13 @@ import UIKit
 
 extension UITextField {
   
-  private struct AssociatedKeys {
+  fileprivate struct AssociatedKeys {
     static var TextKey = "r_TextKey"
     static var AttributedTextKey = "r_AttributedTextKey"
   }
   
   public var rText: Property<String?> {
-    if let rText: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.TextKey) {
+    if let rText: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.TextKey) as AnyObject? {
       return rText as! Property<String?>
     } else {
       let rText = Property<String?>(self.text)
@@ -61,7 +61,7 @@ extension UITextField {
   }
   
   public var rAttributedText: Property<NSAttributedString?> {
-    if let rAttributedText: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.AttributedTextKey) {
+    if let rAttributedText: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.AttributedTextKey) as AnyObject? {
       return rAttributedText as! Property<NSAttributedString?>
     } else {
       let rAttributedText = Property<AttributedString?>(self.attributedText)

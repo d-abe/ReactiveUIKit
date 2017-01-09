@@ -28,12 +28,12 @@ import UIKit
 
 extension UISegmentedControl {
   
-  private struct AssociatedKeys {
+  fileprivate struct AssociatedKeys {
     static var SelectedSegmentIndexKey = "r_SelectedSegmentIndexKey"
   }
   
   public var rSelectedSegmentIndex: Property<Int> {
-    if let rSelectedSegmentIndex: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.SelectedSegmentIndexKey) {
+    if let rSelectedSegmentIndex: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.SelectedSegmentIndexKey) as AnyObject? {
       return rSelectedSegmentIndex as! Property<Int>
     } else {
       let rSelectedSegmentIndex = Property<Int>(self.selectedSegmentIndex)

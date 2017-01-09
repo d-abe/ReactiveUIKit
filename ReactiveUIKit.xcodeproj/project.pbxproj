@@ -277,12 +277,12 @@
 					};
 					ECB7A5401BEB71E10034053A = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0820;
 					};
 					ECB7A54A1BEB71E10034053A = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = 7483NBERMM;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};

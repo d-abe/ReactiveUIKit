@@ -27,13 +27,13 @@ import UIKit
 
 extension UITextView {
   
-  private struct AssociatedKeys {
+  fileprivate struct AssociatedKeys {
     static var TextKey = "r_TextKey"
     static var AttributedTextKey = "r_AttributedTextKey"
   }
   
   public var rText: Property<String?> {
-    if let rText: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.TextKey) {
+    if let rText: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.TextKey) as AnyObject? {
       return rText as! Property<String?>
     } else {
       let rText = Property<String?>(self.text)
@@ -48,9 +48,9 @@ extension UITextView {
       }.disposeIn(rBag)
       
       NotificationCenter.defaultCenter()
-        .rNotification(NSNotification.Name.UITextViewTextDidChange, object: self)
+        .rNotification(Notification.Name.UITextViewTextDidChange, object: self)
         .observeNext { [weak rText] notification in
-          if let textView = notification.object as? UITextView, rText = rText {
+          if let textView = notification.object as? UITextView, let rText = rText {
             updatingFromSelf = true
             rText.value = textView.text
             updatingFromSelf = false
@@ -62,7 +62,7 @@ extension UITextView {
   }
   
   public var rAttributedText: Property<NSAttributedString?> {
-    if let rAttributedText: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.AttributedTextKey) {
+    if let rAttributedText: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.AttributedTextKey) as AnyObject? {
       return rAttributedText as! Property<NSAttributedString?>
     } else {
       let rAttributedText = Property<AttributedString?>(self.attributedText)
@@ -77,9 +77,9 @@ extension UITextView {
       }.disposeIn(rBag)
       
       NotificationCenter.defaultCenter()
-        .rNotification(NSNotification.Name.UITextViewTextDidChange, object: self)
+        .rNotification(Notification.Name.UITextViewTextDidChange, object: self)
         .observeNext { [weak rAttributedText] notification in
-        if let textView = notification.object as? UITextView, rAttributedText = rAttributedText {
+        if let textView = notification.object as? UITextView, let rAttributedText = rAttributedText {
           updatingFromSelf = true
           rAttributedText.value = textView.attributedText
           updatingFromSelf = false

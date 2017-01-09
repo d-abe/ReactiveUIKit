@@ -25,7 +25,7 @@
 import ReactiveKit
 import UIKit
 
-private func applyRowUnitChangeSet<C: CollectionChangesetType where C.Collection.Index == Int>(_ changeSet: C, tableView: UITableView, sectionIndex: Int) {
+private func applyRowUnitChangeSet<C: CollectionChangesetType>(_ changeSet: C, tableView: UITableView, sectionIndex: Int) where C.Collection.Index == Int {
   if changeSet.inserts.count > 0 {
     let indexPaths = changeSet.inserts.map { IndexPath(forItem: $0, inSection: sectionIndex) }
     tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)

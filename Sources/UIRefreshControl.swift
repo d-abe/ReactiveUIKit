@@ -29,12 +29,12 @@ import UIKit
 
 extension UIRefreshControl {
   
-  private struct AssociatedKeys {
+  fileprivate struct AssociatedKeys {
     static var RefreshingKey = "r_RefreshingKey"
   }
   
   public var rRefreshing: Property<Bool> {
-    if let rRefreshing: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.RefreshingKey) {
+    if let rRefreshing: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.RefreshingKey) as AnyObject? {
       return rRefreshing as! Property<Bool>
     } else {
       let rRefreshing = Property<Bool>(self.refreshing)

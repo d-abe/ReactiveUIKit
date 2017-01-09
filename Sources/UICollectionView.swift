@@ -25,7 +25,7 @@
 import ReactiveKit
 import UIKit
 
-private func applyRowUnitChangeSet<C: CollectionChangesetType where C.Collection.Index == Int>(_ changeSet: C, collectionView: UICollectionView, sectionIndex: Int) {
+private func applyRowUnitChangeSet<C: CollectionChangesetType>(_ changeSet: C, collectionView: UICollectionView, sectionIndex: Int) where C.Collection.Index == Int {
   if changeSet.inserts.count > 0 {
     let indexPaths = changeSet.inserts.map { IndexPath(forItem: $0, inSection: sectionIndex) }
     collectionView.insertItemsAtIndexPaths(indexPaths)

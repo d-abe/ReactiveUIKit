@@ -29,12 +29,12 @@ import UIKit
 
 extension UISwitch {
   
-  private struct AssociatedKeys {
+  fileprivate struct AssociatedKeys {
     static var OnKey = "r_OnKey"
   }
   
   public var rOn: Property<Bool> {
-    if let rOn: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.OnKey) {
+    if let rOn: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.OnKey) as AnyObject? {
       return rOn as! Property<Bool>
     } else {
       let rOn = Property<Bool>(self.on)
